@@ -50,27 +50,17 @@ export default function Home({ locale = "en" }: { locale?: Locale }) {
           <div className="about-intro">
             <p className="section-eyebrow">{t("02 / Behind the projects")}</p>
             <h2 id="about-title">{t("About me")}</h2>
-            <p>
-              {t("Follow the request.")} <br />
-              {t("Understand the state.")} <br />
-              {t("Build for the failure.")}{" "}
-            </p>
           </div>
           <div className="about-prose">
             <p>
               {t(
-                "I’m focused on backend engineering, AI agents, and developer tools. I like following a system below the interface: how a request moves, where state lives, and what happens when something fails.",
-              )}{" "}
+                "I work mainly with TypeScript, Go, and Python. I’m interested in backend development, AI agents, and developer tools.",
+              )}
             </p>
             <p>
               {t(
-                "Forge is where I explore agent runtime engineering. Kestri is where I explore what it takes to turn an agent into a useful personal application.",
-              )}{" "}
-            </p>
-            <p>
-              {t(
-                "Different projects, different responsibilities. Both give me a reason to understand the tradeoffs.",
-              )}{" "}
+                "Through Forge, I’m learning how coding-agent runtimes work. With Kestri, I’m exploring research, memory, and scheduled tasks in a personal AI application.",
+              )}
             </p>
           </div>
         </section>
@@ -116,22 +106,12 @@ export default function Home({ locale = "en" }: { locale?: Locale }) {
           <div className="container contact-content">
             <div>
               <p className="section-eyebrow">{t("04 / Get in touch")}</p>
-              <h2 id="contact-title">
-                {t("Have a good")} <br />
-                {t("problem")}{" "}
-                <span className="contact-cursor" aria-hidden="true">
-                  ?
-                </span>
-              </h2>
-              <p>
-                {t("A project, an opportunity, or an engineering question.")}{" "}
-                <br />
-                {t("I’d be glad to hear about it.")}{" "}
-              </p>
+              <h2 id="contact-title">{t("Find me on GitHub.")}</h2>
+              <p>{t("You can find my projects and source code on GitHub.")}</p>
             </div>
             <div className="contact-links">
               <a className="contact-primary" href={site.github}>
-                <GitHubIcon /> {t("Let’s talk")} <Arrow diagonal />
+                <GitHubIcon /> {t("GitHub profile")} <Arrow diagonal />
               </a>
               {site.email && (
                 <a className="text-link" href={`mailto:${site.email}`}>

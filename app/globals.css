@@ -1811,10 +1811,10 @@ body:has(.signal-hero) .contact-section {
   background: #191e13;
 }
 body:has(.signal-hero) .contact-content h2 {
-  font-size: clamp(38px, 5.8vw, 80px);
-  line-height: 1.1;
-  letter-spacing: -4px;
-  max-width: none;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.2;
+  letter-spacing: -2px;
+  max-width: 580px;
 }
 body:has(.signal-hero) .contact-content p {
   font-size: 11px;
