@@ -20,9 +20,6 @@ export function Architecture({
       </div>
       <div className="diagram-core">
         <div className="core-heading">
-          <span className="core-symbol" aria-hidden="true">
-            {project.slug === "forge" ? "ƒ" : "k"}
-          </span>
           {architecture.core}
         </div>
         <ul className="module-grid">

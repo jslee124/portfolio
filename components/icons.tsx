@@ -44,29 +44,9 @@ export function Mark() {
 
 export function ProjectSymbol({ project }: { project: "forge" | "kestri" }) {
   return (
-    <svg
+    <span
       className={`project-symbol symbol-${project}`}
-      width="48"
-      height="48"
-      viewBox="0 0 48 48"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
       aria-hidden="true"
-    >
-      {project === "forge" ? (
-        <>
-          <path d="m8 12 12 12L8 36M26 12l12 12-12 12" />
-          <path d="M20 24h18" />
-        </>
-      ) : (
-        <>
-          <path d="M13 37V11l22 8-22 11M24 26l11 11M13 11l11 15" />
-          <circle cx="25" cy="18" r="1.2" fill="currentColor" stroke="none" />
-        </>
-      )}
-    </svg>
+    />
   );
 }

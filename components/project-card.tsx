@@ -2,7 +2,7 @@ import { GitHubIcon, TechnologyIcon } from "@/components/brand-icons";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { SystemArtwork } from "./system-artwork";
-import { Arrow } from "./icons";
+import { Arrow, ProjectSymbol } from "./icons";
 import { ProjectScene } from "./project-scene";
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -18,20 +18,23 @@ export function ProjectCard({ project }: { project: Project }) {
                 ? "Project 01 / Built by me"
                 : "Project 02 / Built by me"}
             </p>
-            <div className="project-name">
-              <h3>
-                <Link href={`/projects/${project.slug}`}>
-                  {project.name}
-                  <span className="project-title-dot" aria-hidden="true">
-                    .
-                  </span>
-                </Link>
-              </h3>
-              <p className="project-kind">
-                {project.slug === "forge"
-                  ? "Coding agent & developer tools"
-                  : "Personal AI assistant"}
-              </p>
+            <div className="project-masthead">
+              <ProjectSymbol project={project.slug} />
+              <div className="project-name">
+                <h3>
+                  <Link href={`/projects/${project.slug}`}>
+                    {project.name}
+                    <span className="project-title-dot" aria-hidden="true">
+                      .
+                    </span>
+                  </Link>
+                </h3>
+                <p className="project-kind">
+                  {project.slug === "forge"
+                    ? "Coding agent & developer tools"
+                    : "Personal AI assistant"}
+                </p>
+              </div>
             </div>
             <ul
               className="technologies"

@@ -586,11 +586,21 @@ ul {
   gap: 65px;
   padding-block: 48px 60px;
 }
+.project-symbol {
+  display: block;
+  width: 56px;
+  height: 56px;
+  background: var(--foreground);
+  mask: var(--project-mark) center / contain no-repeat;
+}
 .case-header .project-symbol {
-  width: 35px;
-  height: 35px;
-  color: var(--accent);
   margin-bottom: 12px;
+}
+.symbol-forge {
+  --project-mark: url("/brands/forge-mark.svg");
+}
+.symbol-kestri {
+  --project-mark: url("/brands/kestri-mark.svg");
 }
 .eyebrow {
   font-size: 12px;
@@ -691,6 +701,9 @@ ul {
 .diagram-core {
   border: 1px solid var(--border);
   border-radius: 4px;
+}
+.core-heading {
+  padding: 16px 20px 0;
 }
 .module-grid {
   display: grid;
@@ -2381,11 +2394,35 @@ body:has(.signal-hero) .contact-content p {
   font-size: 11px;
 }
 .project-section .project-identity {
-  align-items: center;
-  gap: 20px 45px;
+  display: block;
 }
 .project-section .project-role {
   font-size: 11px;
+  margin-bottom: 22px;
+}
+.project-masthead {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px 20px;
+}
+.project-masthead .project-name {
+  display: contents;
+}
+.project-masthead h3 {
+  grid-column: 2;
+  grid-row: 1;
+}
+.project-masthead .project-kind {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  margin-top: 0;
+}
+.project-masthead .project-symbol {
+  grid-column: 1;
+  grid-row: 1;
+  width: 64px;
+  height: 64px;
 }
 .project-kind {
   font-size: 20px;
@@ -2396,6 +2433,37 @@ body:has(.signal-hero) .contact-content p {
 .project-section .technologies {
   font-size: 13px;
   gap: 10px 18px;
+  margin-top: 26px;
+}
+@media (min-width: 1001px) {
+  .work-directory {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 12px 60px;
+    align-items: center;
+  }
+  .work-directory h2 {
+    margin-top: 0;
+  }
+  .work-directory .section-description {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    margin-top: 0;
+    max-width: 560px;
+  }
+  .project-section .project-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 40px;
+  }
+  .project-section .project-summary {
+    margin-top: 38px;
+  }
+  .project-kind {
+    font-size: 16px;
+  }
 }
 body:has(.signal-hero) .about-section {
   border-bottom: 0;
@@ -2479,7 +2547,19 @@ body:has(.signal-hero) .contact-content > div > .section-eyebrow {
     font-size: 18px;
   }
   .project-section .project-identity {
-    gap: 18px;
+    display: block;
+  }
+  .project-masthead {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 8px 16px;
+  }
+  .project-masthead .project-symbol {
+    width: 48px;
+    height: 48px;
+  }
+  .project-kind {
+    font-size: 14px;
+    margin-top: 8px;
   }
   .project-section .technologies {
     width: 100%;
