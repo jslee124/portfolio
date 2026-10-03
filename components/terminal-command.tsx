@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { useNavigationSignal } from "./navigation-signal";
 
 const shortcuts = [
@@ -15,12 +15,78 @@ const shortcuts = [
 
 export function TerminalCommand() {
   const navigate = useNavigationSignal();
+  const pendingNavigation = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (pendingNavigation.current) clearTimeout(pendingNavigation.current);
+    },
+    [],
+  );
+
+  function openAfterOutput(href: string) {
+    pendingNavigation.current = setTimeout(() => {
+      pendingNavigation.current = null;
+      navigate(href);
+    }, 1100);
+  }
+  const drag = useRef<{ pointerId: number; x: number; y: number } | null>(null);
   const [command, setCommand] = useState("");
   const [history, setHistory] = useState<
     { command: string; response: string }[]
   >([]);
 
+  function startDrag(event: PointerEvent<HTMLElement>) {
+    if (
+      event.pointerType !== "mouse" ||
+      event.button !== 0 ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !(event.target instanceof Element) ||
+      event.target.closest("button, input, a, label, .terminal-screen")
+    )
+      return;
+
+    event.preventDefault();
+    drag.current = {
+      pointerId: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+    event.currentTarget.dataset.dragging = "true";
+  }
+
+  function moveDrag(event: PointerEvent<HTMLElement>) {
+    const origin = drag.current;
+    if (!origin || origin.pointerId !== event.pointerId) return;
+    const clamp = (angle: number) => Math.max(-14, Math.min(14, angle));
+    event.currentTarget.style.setProperty(
+      "--terminal-rotate-x",
+      `${clamp((origin.y - event.clientY) / 24)}deg`,
+    );
+    event.currentTarget.style.setProperty(
+      "--terminal-rotate-y",
+      `${clamp((event.clientX - origin.x) / 32)}deg`,
+    );
+  }
+
+  function endDrag(event: PointerEvent<HTMLElement>) {
+    if (drag.current?.pointerId !== event.pointerId) return;
+    drag.current = null;
+    delete event.currentTarget.dataset.dragging;
+    event.currentTarget.style.removeProperty("--terminal-rotate-x");
+    event.currentTarget.style.removeProperty("--terminal-rotate-y");
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }
+
   function runCommand(value: string) {
+    if (!value.trim()) return;
+    if (pendingNavigation.current) {
+      clearTimeout(pendingNavigation.current);
+      pendingNavigation.current = null;
+    }
     const input = value
       .trim()
       .toLowerCase()
@@ -53,12 +119,12 @@ export function TerminalCommand() {
     }
     if (input === "forge" || input === "kestri") {
       record(`Opening ${input} case study…`);
-      navigate(`/projects/${input}`);
+      openAfterOutput(`/projects/${input}`);
       return;
     }
     if (["projects", "about", "skills", "contact"].includes(input)) {
-      navigate(`#${input}`);
-      record(`Opened ${input}.`);
+      record(`Opening ${input}…`);
+      openAfterOutput(`#${input}`);
       return;
     }
     record(
@@ -67,98 +133,123 @@ export function TerminalCommand() {
   }
 
   return (
-    <section
-      className="terminal-command"
-      aria-label="Interactive portfolio terminal"
-    >
-      <div className="terminal-bezel-title">
-        <span className="terminal-model">
-          MORI <span>PERSONAL COMPUTER</span>
-        </span>
-        <span className="terminal-power">
-          <i aria-hidden="true" /> POWER
-        </span>
-      </div>
-      <div className="terminal-screen">
-        <div className="terminal-screen-heading">
-          <span>PORTFOLIO OS</span>
-          <span>INTERACTIVE DIRECTORY</span>
-        </div>
-        <div className="terminal-boot">
-          <p>Welcome to Mori’s working directory.</p>
-          <p>Explore the projects. Meet the person behind them.</p>
-          <p className="terminal-instruction">
-            Type <strong>help</strong> to begin, or use the keys below.
-          </p>
-        </div>
+    <div className="terminal-workstation">
+      <section
+        className="terminal-command"
+        aria-label="Interactive portfolio terminal"
+        onPointerDown={startDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onLostPointerCapture={endDrag}
+      >
         <div
-          className="command-history"
-          role="log"
-          aria-label="Command history"
-          aria-live="polite"
-          aria-relevant="additions"
-        >
-          {history.map((entry, index) => (
-            <div
-              className="command-history-entry"
-              key={`${index}-${entry.command}`}
-            >
-              <p className="command-echo">mori:~$ {entry.command}</p>
-              <p>{entry.response}</p>
-            </div>
-          ))}
+          className="terminal-depth terminal-depth-back"
+          aria-hidden="true"
+        />
+        <div
+          className="terminal-depth terminal-depth-right"
+          aria-hidden="true"
+        />
+        <div
+          className="terminal-depth terminal-depth-left"
+          aria-hidden="true"
+        />
+        <div className="terminal-depth terminal-depth-top" aria-hidden="true" />
+        <div
+          className="terminal-depth terminal-depth-bottom"
+          aria-hidden="true"
+        />
+        <div className="terminal-bezel-title">
+          <span className="terminal-model">
+            MORI <span>PERSONAL COMPUTER</span>
+          </span>
+          <span className="terminal-power">
+            <i aria-hidden="true" /> POWER
+          </span>
+          <span className="terminal-drag-hint">DRAG THE CASE TO TILT ↔</span>
         </div>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            runCommand(command);
-          }}
-          className="command-form"
-        >
-          <label htmlFor="portfolio-command" className="command-prompt">
-            <span className="prompt-user">mori</span>
-            <span className="prompt-path">:~</span>
-            <span>$</span>
-            <span className="sr-only"> Portfolio navigation command</span>
-          </label>
-          <input
-            id="portfolio-command"
-            value={command}
-            onChange={(event) => setCommand(event.target.value)}
-            placeholder="type a command…"
-            maxLength={100}
-            autoComplete="off"
-            autoCapitalize="none"
-            spellCheck={false}
-            aria-describedby="command-hint"
-          />
-          <button
-            type="submit"
-            className="command-enter"
-            aria-label="Run portfolio command"
+        <div className="terminal-screen">
+          <div className="terminal-screen-heading">
+            <span>PORTFOLIO OS</span>
+            <span>INTERACTIVE DIRECTORY</span>
+          </div>
+          <div className="terminal-boot">
+            <p>Welcome to Mori’s working directory.</p>
+            <p>Explore the projects. Meet the person behind them.</p>
+            <p className="terminal-instruction">
+              Type <strong>help</strong> to begin, or use the keys below.
+            </p>
+          </div>
+          <div
+            className="command-history"
+            role="log"
+            aria-label="Command history"
+            aria-live="polite"
+            aria-relevant="additions"
           >
-            ↵
-          </button>
-        </form>
-      </div>
-      <div className="terminal-keyboard">
-        <span id="command-hint">QUICK COMMANDS</span>
-        <div className="command-shortcuts">
-          {shortcuts.map((shortcut) => (
+            {history.map((entry, index) => (
+              <div
+                className="command-history-entry"
+                key={`${index}-${entry.command}`}
+              >
+                <p className="command-echo">mori:~$ {entry.command}</p>
+                <p>{entry.response}</p>
+              </div>
+            ))}
+          </div>
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              runCommand(command);
+            }}
+            className="command-form"
+          >
+            <label htmlFor="portfolio-command" className="command-prompt">
+              <span className="prompt-user">mori</span>
+              <span className="prompt-path">:~</span>
+              <span>$</span>
+              <span className="sr-only"> Portfolio navigation command</span>
+            </label>
+            <input
+              id="portfolio-command"
+              value={command}
+              onChange={(event) => setCommand(event.target.value)}
+              placeholder="type a command…"
+              maxLength={100}
+              autoComplete="off"
+              autoCapitalize="none"
+              spellCheck={false}
+              aria-describedby="command-hint"
+            />
             <button
-              key={shortcut}
-              type="button"
-              onClick={() => runCommand(shortcut)}
+              type="submit"
+              className="command-enter"
+              aria-label="Run portfolio command"
             >
-              {shortcut}
+              ↵
             </button>
-          ))}
+          </form>
         </div>
-        <div className="terminal-bezel-footer" aria-hidden="true">
-          <span>LOCAL DIRECTORY / PORTFOLIO NAVIGATION</span>
-          <span className="terminal-vents" />
+        <div className="terminal-keyboard">
+          <span id="command-hint">QUICK COMMANDS</span>
+          <div className="command-shortcuts">
+            {shortcuts.map((shortcut) => (
+              <button
+                key={shortcut}
+                type="button"
+                onClick={() => runCommand(shortcut)}
+              >
+                {shortcut}
+              </button>
+            ))}
+          </div>
+          <div className="terminal-bezel-footer" aria-hidden="true">
+            <span>LOCAL DIRECTORY / PORTFOLIO NAVIGATION</span>
+            <span className="terminal-vents" />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
