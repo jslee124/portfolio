@@ -56,7 +56,13 @@ export function NavigationSignal({ children }: { children: ReactNode }) {
     )
       return;
     const link = event.target.closest<HTMLAnchorElement>("a[href]");
-    if (!link || link.target || link.hasAttribute("download")) return;
+    if (
+      !link ||
+      link.target ||
+      link.hasAttribute("download") ||
+      link.hasAttribute("data-native-navigation")
+    )
+      return;
     const href = link.getAttribute("href");
     if (
       !href ||
@@ -66,12 +72,22 @@ export function NavigationSignal({ children }: { children: ReactNode }) {
       return;
     if (href === pathname) return;
     event.preventDefault();
-    navigate(pathname === "/" && href.startsWith("/#") ? href.slice(1) : href);
+    const home =
+      pathname === "/"
+        ? "/"
+        : pathname === "/zh" || pathname === "/zh/"
+          ? "/zh/"
+          : null;
+    navigate(
+      home && href.startsWith(`${home}#`) ? href.slice(home.length) : href,
+    );
   }
 
   return (
     <SignalContext.Provider value={navigate}>
-      <div id="top" onClickCapture={capture}>{children}</div>
+      <div id="top" onClickCapture={capture}>
+        {children}
+      </div>
       {destination && (
         <div key={destination} className="signal-transition" aria-hidden="true">
           <span>

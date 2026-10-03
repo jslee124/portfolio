@@ -1,3 +1,4 @@
+import { translator, localizedPath, type Locale } from "@/lib/i18n";
 import { GitHubIcon, TechnologyIcon } from "@/components/brand-icons";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
@@ -5,9 +6,16 @@ import { SystemArtwork } from "./system-artwork";
 import { Arrow, ProjectSymbol } from "./icons";
 import { ProjectScene } from "./project-scene";
 
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+  locale = "en",
+}: {
+  project: Project;
+  locale?: Locale;
+}) {
+  const t = translator(locale);
   return (
-    <ProjectScene project={project.slug}>
+    <ProjectScene project={project.slug} locale={locale}>
       <article
         className={`project-showcase container showcase-${project.slug}`}
       >
@@ -15,14 +23,16 @@ export function ProjectCard({ project }: { project: Project }) {
           <div className="project-identity">
             <p className="project-role">
               {project.slug === "forge"
-                ? "Project 01 / Built by me"
-                : "Project 02 / Built by me"}
+                ? t("Project 01 / Built by me")
+                : t("Project 02 / Built by me")}
             </p>
             <div className="project-masthead">
               <ProjectSymbol project={project.slug} />
               <div className="project-name">
                 <h3>
-                  <Link href={`/projects/${project.slug}`}>
+                  <Link
+                    href={localizedPath(locale, `/projects/${project.slug}`)}
+                  >
                     {project.name}
                     <span className="project-title-dot" aria-hidden="true">
                       .
@@ -31,14 +41,14 @@ export function ProjectCard({ project }: { project: Project }) {
                 </h3>
                 <p className="project-kind">
                   {project.slug === "forge"
-                    ? "Coding agent & developer tools"
-                    : "Personal AI assistant"}
+                    ? t("Coding agent & developer tools")
+                    : t("Personal AI assistant")}
                 </p>
               </div>
             </div>
             <ul
               className="technologies"
-              aria-label={`${project.name} technologies`}
+              aria-label={`${project.name} ${locale === "zh" ? "技术栈" : "technologies"}`}
             >
               {project.technologies.map((technology) => (
                 <li key={technology}>
@@ -52,23 +62,24 @@ export function ProjectCard({ project }: { project: Project }) {
             <p className="project-tagline">{project.tagline}</p>
             <p className="project-description">{project.description}</p>
             <div className="project-actions">
-              <Link className="project-open" href={`/projects/${project.slug}`}>
-                Read the case study
-                <Arrow />
+              <Link
+                className="project-open"
+                href={localizedPath(locale, `/projects/${project.slug}`)}
+              >
+                {t("Read the case study")} <Arrow />
               </Link>
               <a
                 className="subtle-link"
                 href={project.github}
-                aria-label={`${project.name} on GitHub`}
+                aria-label={`${project.name} · GitHub`}
               >
-                <GitHubIcon /> View source
-                <Arrow diagonal />
+                <GitHubIcon /> {t("View source")} <Arrow diagonal />
               </a>
             </div>
           </div>
         </div>
         <div className="project-artifact">
-          <SystemArtwork project={project.slug} />
+          <SystemArtwork project={project.slug} locale={locale} />
         </div>
       </article>
     </ProjectScene>

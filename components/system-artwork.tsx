@@ -1,5 +1,13 @@
+import { translator, type Locale } from "@/lib/i18n";
 /** Readable architecture sketches. Connectors are anchored to the HTML nodes. */
-export function SystemArtwork({ project }: { project: "forge" | "kestri" }) {
+export function SystemArtwork({
+  project,
+  locale = "en",
+}: {
+  project: "forge" | "kestri";
+  locale?: Locale;
+}) {
+  const t = translator(locale);
   const forge = project === "forge";
   return (
     <figure className={`system-diagram diagram-${project}`}>
@@ -9,45 +17,54 @@ export function SystemArtwork({ project }: { project: "forge" | "kestri" }) {
         </span>
         <h4>
           {forge
-            ? "What happens inside a tool call"
-            : "What continues beyond a conversation"}
+            ? t("What happens inside a tool call")
+            : t("What continues beyond a conversation")}
         </h4>
         <p>
           {forge
-            ? "Permission is decided before a tool produces side effects."
-            : "Research, memory, and future tasks have different lifetimes."}
+            ? t("Permission is decided before a tool produces side effects.")
+            : t("Research, memory, and future tasks have different lifetimes.")}
         </p>
       </div>
       {forge ? (
         <>
-          <ol className="execution-steps" aria-label="Tool execution sequence">
+          <ol
+            className="execution-steps"
+            aria-label={t("Tool execution sequence")}
+          >
             <li className="system-node">
-              <span className="node-label">01 / MODEL</span>
-              <h5>Propose a tool call</h5>
-              <p>The model supplies a tool name and structured arguments.</p>
+              <span className="node-label">{t("01 / MODEL")}</span>
+              <h5>{t("Propose a tool call")}</h5>
+              <p>
+                {t("The model supplies a tool name and structured arguments.")}
+              </p>
               <code>tool.propose()</code>
               <span className="node-connector" aria-hidden="true">
                 →
               </span>
             </li>
             <li className="system-node policy-step">
-              <span className="node-label">02 / POLICY</span>
-              <h5>Check permission</h5>
-              <p>Allow the call, ask for confirmation, or deny execution.</p>
+              <span className="node-label">{t("02 / POLICY")}</span>
+              <h5>{t("Check permission")}</h5>
+              <p>
+                {t("Allow the call, ask for confirmation, or deny execution.")}
+              </p>
               <div className="decision-options">
                 <span>allow</span>
                 <span>confirm</span>
                 <span>deny</span>
               </div>
               <span className="node-connector" aria-hidden="true">
-                →<small>approved</small>
+                →<small>{t("approved")}</small>
               </span>
             </li>
             <li className="system-node">
-              <span className="node-label">03 / TOOL</span>
-              <h5>Execute approved work</h5>
+              <span className="node-label">{t("03 / TOOL")}</span>
+              <h5>{t("Execute approved work")}</h5>
               <p>
-                The tool runs and returns a structured result to the agent loop.
+                {t(
+                  "The tool runs and returns a structured result to the agent loop.",
+                )}{" "}
               </p>
               <code>tool.execute()</code>
             </li>
@@ -57,10 +74,11 @@ export function SystemArtwork({ project }: { project: "forge" | "kestri" }) {
               ↳
             </span>
             <div>
-              <strong>Run evidence, recorded throughout</strong>
+              <strong>{t("Run evidence, recorded throughout")}</strong>
               <p>
-                Traces connect tool proposals, permission decisions, and
-                execution results.
+                {t(
+                  "Traces connect tool proposals, permission decisions, and execution results.",
+                )}{" "}
               </p>
             </div>
           </div>
@@ -68,27 +86,37 @@ export function SystemArtwork({ project }: { project: "forge" | "kestri" }) {
       ) : (
         <>
           <div className="conversation-node system-node">
-            <span className="node-label">NOW / CONVERSATION</span>
-            <h5>Research with sources</h5>
-            <p>Explore a question and keep the references behind the answer.</p>
+            <span className="node-label">{t("NOW / CONVERSATION")}</span>
+            <h5>{t("Research with sources")}</h5>
+            <p>
+              {t(
+                "Explore a question and keep the references behind the answer.",
+              )}
+            </p>
           </div>
           <div className="context-branches">
             <div className="context-branch">
-              <p className="branch-label">Save explicitly</p>
+              <p className="branch-label">{t("Save explicitly")}</p>
               <div className="system-node">
                 <span className="node-label">
-                  ACROSS CONVERSATIONS / MEMORY
+                  {t("ACROSS CONVERSATIONS / MEMORY")}{" "}
                 </span>
-                <h5>Remember useful context</h5>
-                <p>Save a preference. Inspect, correct, or forget it later.</p>
+                <h5>{t("Remember useful context")}</h5>
+                <p>
+                  {t(
+                    "Save a preference. Inspect, correct, or forget it later.",
+                  )}
+                </p>
               </div>
             </div>
             <div className="context-branch">
-              <p className="branch-label">Schedule explicitly</p>
+              <p className="branch-label">{t("Schedule explicitly")}</p>
               <div className="system-node">
-                <span className="node-label">LATER / AGREED TASK</span>
-                <h5>Continue at an agreed time</h5>
-                <p>Set a schedule, timezone, and delivery destination.</p>
+                <span className="node-label">{t("LATER / AGREED TASK")}</span>
+                <h5>{t("Continue at an agreed time")}</h5>
+                <p>
+                  {t("Set a schedule, timezone, and delivery destination.")}
+                </p>
               </div>
             </div>
           </div>
@@ -97,20 +125,21 @@ export function SystemArtwork({ project }: { project: "forge" | "kestri" }) {
               ≡
             </span>
             <div>
-              <strong>Durable state in PostgreSQL</strong>
+              <strong>{t("Durable state in PostgreSQL")}</strong>
               <p>
-                Conversation, memory, and task state persist locally across
-                these lifetimes.
+                {t(
+                  "Conversation, memory, and task state persist locally across these lifetimes.",
+                )}{" "}
               </p>
             </div>
           </div>
         </>
       )}
       <figcaption>
-        Architecture sketch ·{" "}
+        {t("Architecture sketch ·")}{" "}
         {forge
-          ? "policy is evaluated before execution"
-          : "memory and scheduled tasks have separate lifetimes"}
+          ? t("policy is evaluated before execution")
+          : t("memory and scheduled tasks have separate lifetimes")}
       </figcaption>
     </figure>
   );

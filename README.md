@@ -24,7 +24,7 @@ npm start
 
 - `data/site.ts`: name, GitHub, email, LinkedIn, and grouped technologies. Email and LinkedIn are hidden until populated; no fake contact details are displayed.
 - `data/projects.ts`: project metadata, case study copy, architecture labels, engineering decisions, and source links.
-- `app/page.tsx`: hero and about copy. The supplied Computer Science student description is used; no availability or internship status is assumed.
+- `components/home-page.tsx`: hero and about copy. The supplied Computer Science student description is used; no availability or internship status is assumed.
 - `app/globals.css`: semantic colors, responsive layout, and motion. Light/dark mode follows the system preference with no client-side theme script.
 - `app/icon.svg`: personal favicon.
 - `app/opengraph-image.tsx`: generated PNG social card.
@@ -79,3 +79,24 @@ External repository/document links are supplied from the project sources. Kestri
 Brand marks come from [Simple Icons](https://github.com/simple-icons/simple-icons), packaged locally as SVG paths in `components/brand-icons.tsx`. GitHub links include the GitHub mark, and named technologies retain visible text alongside decorative logos. Skill logos use brand colors; compact project tags follow their section color. The icons render on the server without client-side icon loading or external CDN requests.
 
 Navigation commands print their output before a 1.1-second pause and navigation. A new command cancels any pending navigation; timers are also cleared on unmount.
+
+
+## English and Simplified Chinese
+
+English keeps the existing URLs (`/`, `/projects/forge`, `/projects/kestri`). Chinese pages use `/zh`, `/zh/projects/forge`, and `/zh/projects/kestri`. The header language link keeps the current page, query, and section when JavaScript is enabled; without JavaScript it still links to the same page in the other language. Language selection uses explicit URLs; there is no automatic redirect or stored preference.
+
+Both languages share `components/home-page.tsx`, `components/project-page.tsx`, and the diagram components. English project copy lives in `data/projects.ts`; Chinese prose lives in `data/zh.json`. `data/localized-projects.ts` translates display fields while preserving slugs, project names, technologies, and source URLs. Keep technical names, command identifiers, and code expressions in English where appropriate. Changing an English sentence also requires updating its key in the Chinese dictionary.
+
+Each language has a root layout with its own document language and metadata. Switching languages loads a new document. `app/global-not-found.tsx` provides a bilingual 404 for unmatched paths; this uses Next.js's documented `experimental.globalNotFound` flag because there are multiple root layouts. Social-card artwork is shared; document titles, descriptions, Open Graph locale, alternate-language links, and sitemap entries are localized.
+
+Run `npm run check:i18n` to check translation coverage and language-switch URL behavior. With a production server running, `I18N_TEST_URL=http://localhost:3000 npm run check:i18n` also checks both homepages, all four case studies, metadata, localized navigation, and 404 status.
+
+## 中英文支持
+
+英文继续使用原有地址，中文页面以 `/zh` 开头。导航栏的语言切换会在启用 JavaScript 时保留当前页面、查询参数与章节；未启用时仍可进入另一种语言的对应页面。语言由 URL 明确指定，不自动重定向，也不保存偏好。
+
+两种语言共用页面与图解组件。英文项目内容位于 `data/projects.ts`，中文文案位于 `data/zh.json`。项目名、技术栈、命令、代码表达式与来源 URL 保持原样；修改英文句子时，需要同步更新中文词典中的对应键。
+
+两种语言分别设置 document language 和 metadata，切换时加载新文档。全局 404 同时提供中英文入口。社交分享图片共用，页面标题、描述、Open Graph locale、语言替代链接和 sitemap 则按语言生成。
+
+使用 `npm run check:i18n` 检查翻译覆盖和切换 URL。生产服务器启动后，可运行 `I18N_TEST_URL=http://localhost:3000 npm run check:i18n`，检查六个页面、metadata、导航语言和 404 状态。

@@ -1,26 +1,28 @@
-export function ForgeFlow() {
+import { translator, type Locale } from "@/lib/i18n";
+export function ForgeFlow({ locale = "en" }: { locale?: Locale }) {
+  const t = translator(locale);
   return (
     <figure
       className="forge-flow"
-      aria-label="Simplified Forge tool execution flow"
+      aria-label={t("Simplified Forge tool execution flow")}
     >
       <div className="flow-header">
-        <span>Inside a tool call</span>
+        <span>{t("Inside a tool call")}</span>
         <span className="flow-key">
-          <i /> Native runtime
+          <i /> {t("Native runtime")}{" "}
         </span>
       </div>
       <div className="flow-track">
         <div className="flow-node">
           <span className="flow-port" aria-hidden="true" />
-          <span className="flow-kind">Model</span>
-          <strong>Propose a tool call</strong>
-          <p>Structured name + arguments</p>
+          <span className="flow-kind">{t("Model")}</span>
+          <strong>{t("Propose a tool call")}</strong>
+          <p>{t("Structured name + arguments")}</p>
         </div>
         <div className="flow-node policy-node">
           <span className="flow-port" aria-hidden="true" />
-          <span className="flow-kind">Policy</span>
-          <strong>Decide before execution</strong>
+          <span className="flow-kind">{t("Policy")}</span>
+          <strong>{t("Decide before execution")}</strong>
           <div className="policy-outcomes">
             <span>allow</span>
             <span>confirm</span>
@@ -29,51 +31,56 @@ export function ForgeFlow() {
         </div>
         <div className="flow-node">
           <span className="flow-port" aria-hidden="true" />
-          <span className="flow-kind">Tool</span>
-          <strong>Execute approved work</strong>
-          <p>Return a structured result</p>
+          <span className="flow-kind">{t("Tool")}</span>
+          <strong>{t("Execute approved work")}</strong>
+          <p>{t("Return a structured result")}</p>
         </div>
       </div>
       <div className="flow-return">
-        <span aria-hidden="true">↳</span> Continue the loop{" "}
-        <span className="trace-label">Record run evidence</span>
+        <span aria-hidden="true">↳</span> {t("Continue the loop")}{" "}
+        <span className="trace-label">{t("Record run evidence")}</span>
       </div>
       <figcaption>
-        Architecture sketch · policy is evaluated before side effects
+        {t(
+          "Architecture sketch · policy is evaluated before side effects",
+        )}{" "}
       </figcaption>
     </figure>
   );
 }
 
-export function KestriTimeline() {
+export function KestriTimeline({ locale = "en" }: { locale?: Locale }) {
+  const t = translator(locale);
   const layers = [
     {
-      time: "Now",
-      title: "A conversation",
-      detail: "Research a question. Keep the sources.",
+      time: t("Now"),
+      title: t("A conversation"),
+      detail: t("Research a question. Keep the sources."),
       symbol: "conversation",
     },
     {
-      time: "Across conversations",
-      title: "A remembered preference",
-      detail: "Save, inspect, correct, or forget.",
+      time: t("Across conversations"),
+      title: t("A remembered preference"),
+      detail: t("Save, inspect, correct, or forget."),
       symbol: "memory",
     },
     {
-      time: "Later",
-      title: "An agreed task",
-      detail: "An explicit schedule, timezone, and delivery.",
+      time: t("Later"),
+      title: t("An agreed task"),
+      detail: t("An explicit schedule, timezone, and delivery."),
       symbol: "schedule",
     },
   ];
   return (
     <figure
       className="kestri-timeline"
-      aria-label="Kestri conversation, memory, and scheduled task lifetimes"
+      aria-label={t(
+        "Kestri conversation, memory, and scheduled task lifetimes",
+      )}
     >
       <div className="timeline-header">
-        <span>Beyond a single turn</span>
-        <span>Telegram interface</span>
+        <span>{t("Beyond a single turn")}</span>
+        <span>{t("Telegram interface")}</span>
       </div>
       <ol className="time-layers">
         {layers.map((layer) => (
@@ -124,11 +131,11 @@ export function KestriTimeline() {
           <ellipse cx="12" cy="5" rx="8" ry="3" />
           <path d="M4 5v14c0 4 16 4 16 0V5M4 12c0 4 16 4 16 0" />
         </svg>
-        <span>Durable state</span>
+        <span>{t("Durable state")}</span>
         <span>PostgreSQL</span>
       </div>
       <figcaption>
-        Application sketch · distinct lifetimes, persisted locally
+        {t("Application sketch · distinct lifetimes, persisted locally")}{" "}
       </figcaption>
     </figure>
   );
