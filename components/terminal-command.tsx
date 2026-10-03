@@ -177,7 +177,7 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
           </div>
           <div className="terminal-boot">
             <p>Welcome to Mori’s working directory.</p>
-            <p>Explore the projects. Meet the person behind them.</p>
+            <p>Explore the projects.</p>
             <p className="terminal-instruction">
               Type <strong>help</strong> to begin, or use the keys below.{" "}
             </p>

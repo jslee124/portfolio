@@ -30,7 +30,7 @@ const plexMono = localFont({
 
 export function siteMetadata(locale: Locale): Metadata {
   const title =
-    locale === "zh" ? "Mori — 软件工程师" : "Mori — Software Engineer";
+    locale === "zh" ? "Mori — 作品集" : "Mori — Portfolio";
   const description =
     locale === "zh"
       ? "用 TypeScript、Go 和 Python 构建后端系统、开发者工具与 AI Agent。"

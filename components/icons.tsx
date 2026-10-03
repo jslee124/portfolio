@@ -25,19 +25,20 @@ export function Mark() {
   return (
     <svg
       className="mark"
-      width="30"
-      height="30"
+      width="32"
+      height="28"
       viewBox="0 0 32 32"
       fill="none"
       aria-hidden="true"
     >
       <path
-        d="m5 7 9 9-9 9M18 25h10"
+        d="m4 8 8 8-8 8"
         stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="square"
-        strokeLinejoin="miter"
+        strokeWidth="2.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
+      <rect className="mark-cursor" x="17" y="22.6" width="11" height="2.8" rx="0.6" fill="currentColor" />
     </svg>
   );
 }

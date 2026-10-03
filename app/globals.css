@@ -127,13 +127,29 @@ ul {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  font-size: 17px;
+  gap: 10px;
+  font-size: 18px;
   font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.6px;
 }
 .mark {
+  display: block;
   color: var(--accent);
   flex-shrink: 0;
+}
+.brand-name {
+  padding-bottom: 1px;
+}
+.brand-path {
+  color: var(--muted);
+  font-size: 0.82em;
+}
+.mark-cursor {
+  transition: opacity 160ms ease;
+}
+.brand:hover .mark-cursor {
+  opacity: 0.55;
 }
 .nav-links {
   display: flex;
@@ -563,7 +579,7 @@ ul {
   font-size: 14px;
 }
 .footer .mark {
-  width: 24px;
+  width: 27px;
   height: 24px;
 }
 .case-study {
@@ -1208,10 +1224,6 @@ button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 5px;
 }
-.brand-path {
-  color: var(--muted);
-  font-size: 13px;
-}
 .section-prompt,
 .project-slash,
 .contact-cursor {
@@ -1395,11 +1407,8 @@ button:focus-visible {
     gap: 7px;
     font-size: 14px;
   }
-  .brand-path {
-    font-size: 11px;
-  }
   .mark {
-    width: 24px;
+    width: 27px;
     height: 24px;
   }
   .hero-actions {

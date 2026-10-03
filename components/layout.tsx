@@ -16,9 +16,7 @@ export function Navbar({ locale = "en" }: { locale?: Locale }) {
           aria-label={t("Mori home")}
         >
           <Mark />
-          <span>
-            mori<span className="brand-path">:~</span>
-          </span>
+          <span className="brand-name">mori<span className="brand-path">:~</span></span>
         </Link>
         <div className="nav-links">
           <LanguageSwitcher locale={locale} />
@@ -48,9 +46,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
     <footer className="container footer">
       <Link className="brand" href={localizedPath(locale)}>
         <Mark />
-        <span>
-          mori<span className="brand-path">:~</span>
-        </span>
+        <span className="brand-name">mori<span className="brand-path">:~</span></span>
       </Link>
       <p>{t("Built to inspect. Made to explore.")}</p>
       <a href={site.github}>
