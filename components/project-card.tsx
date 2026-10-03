@@ -39,7 +39,7 @@ export function ProjectCard({ project }: { project: Project }) {
             <p className="project-description">{project.description}</p>
             <div className="project-actions">
               <Link className="project-open" href={`/projects/${project.slug}`}>
-                Inside {project.name}
+                Read the case study
                 <Arrow />
               </Link>
               <a
@@ -47,7 +47,7 @@ export function ProjectCard({ project }: { project: Project }) {
                 href={project.github}
                 aria-label={`${project.name} on GitHub`}
               >
-                Source
+                View source
                 <Arrow diagonal />
               </a>
             </div>
