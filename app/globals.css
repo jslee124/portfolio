@@ -2324,3 +2324,105 @@ body:has(.signal-hero) .contact-content > div > .section-eyebrow {
     display: none;
   }
 }
+
+/* Brand logos share alignment, while visible labels carry their meaning. */
+.github-logo,
+.technology-logo {
+  display: block;
+  flex-shrink: 0;
+}
+.github-logo {
+  width: 18px;
+  height: 18px;
+}
+.nav-links a,
+.footer > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.technologies li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.technologies .technology-logo {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+body:has(.signal-hero) .stack-category li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.stack-category .technology-logo {
+  width: 27px;
+  height: 27px;
+}
+.contact-primary .github-logo {
+  width: 21px;
+  height: 21px;
+}
+body:has(.signal-hero) .contact-primary {
+  gap: 16px;
+}
+.contact-primary .arrow {
+  margin-left: 24px;
+}
+.button:has(.github-logo) {
+  gap: 12px;
+}
+.button:has(.github-logo) .arrow {
+  margin-left: 8px;
+}
+@media (max-width: 760px) {
+  .stack-category .technology-logo {
+    width: 24px;
+    height: 24px;
+  }
+  body:has(.signal-hero) .stack-category li {
+    gap: 10px;
+  }
+}
+@media (max-width: 420px) {
+  .nav-links .github-logo {
+    width: 13px;
+    height: 13px;
+  }
+  .nav-links a {
+    gap: 4px;
+  }
+  .stack-category .technology-logo {
+    width: 20px;
+    height: 20px;
+  }
+  body:has(.signal-hero) .stack-category li {
+    gap: 7px;
+    font-size: 16px;
+  }
+  body:has(.signal-hero) .stack-category {
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .github-nav .github-label,
+  .github-nav .arrow {
+    display: none;
+  }
+  .nav-links .github-nav .github-logo {
+    width: 18px;
+    height: 18px;
+  }
+  body:has(.signal-hero) .stack-grid {
+    column-gap: 14px;
+  }
+  .stack-category .technology-logo {
+    width: 18px;
+    height: 18px;
+  }
+  body:has(.signal-hero) .stack-category li {
+    gap: 6px;
+  }
+}

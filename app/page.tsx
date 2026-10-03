@@ -1,3 +1,4 @@
+import { GitHubIcon, TechnologyIcon } from "@/components/brand-icons";
 import { projects } from "@/data/projects";
 import { site, technologies } from "@/data/site";
 import { Arrow } from "@/components/icons";
@@ -88,7 +89,10 @@ export default function Home() {
                 <h3>{category}</h3>
                 <ul>
                   {items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item}>
+                      <TechnologyIcon name={item} />
+                      <span>{item}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -121,7 +125,7 @@ export default function Home() {
             </div>
             <div className="contact-links">
               <a className="contact-primary" href={site.github}>
-                Let’s talk <Arrow diagonal />
+                <GitHubIcon /> Let’s talk <Arrow diagonal />
               </a>
               {site.email && (
                 <a className="text-link" href={`mailto:${site.email}`}>

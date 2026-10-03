@@ -31,6 +31,18 @@ npm start
 
 Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to your actual deployed origin **before building**. This enables accurate absolute social image URLs, canonical URLs, and sitemap entries. Without it, the sitemap is intentionally empty and Next.js uses its development fallback origin for social metadata. Do not publish with a placeholder domain.
 
+## Deployment
+
+Production: https://mori-portfolio-weld.vercel.app — Vercel project `morisoft1/mori-portfolio`.
+
+`NEXT_PUBLIC_SITE_URL` is configured for the Production environment with this origin. The local `.vercel` project link and `.env.local` are ignored by Git. After signing in to the Vercel CLI, publish the current working tree with:
+
+```sh
+npx vercel deploy --prod --yes --scope morisoft1
+```
+
+GitHub automatic deployment is not connected yet: the Vercel account needs a GitHub login connection before the repository can be linked. CLI deployment works independently of that integration.
+
 ## Architecture
 
 Pages and case study content are Server Components. Four client components add progressive interaction: `character-field.tsx` draws the hero, `terminal-command.tsx` handles local command feedback, and `navigation-signal.tsx` coordinates a brief transition shared by links and commands. `home-motion.tsx` adds one-time section/node entrances, a reading progress line, and pointer-following background light. `project-scene.tsx` is a server-rendered project section with ordinary scrolling. Content stays visible before enhancement; motion respects reduced-motion preferences and never changes connector positions. Project routes are statically generated from typed project data; unknown projects return 404. No database, API backend, authentication, CMS, analytics, or animation dependencies are needed. IBM Plex Mono fonts are packaged locally.
@@ -57,3 +69,7 @@ Commands: `help`, `whoami`, `projects`, `forge`, `kestri`, `about`, `skills`, `c
 `npm audit --omit=dev` reported zero vulnerabilities. The full audit reported five high-severity findings in the ESLint development dependency chain, rooted in the `braces` nested-pattern denial-of-service advisory ([GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)). At implementation time, the registry's latest `braces` release was still affected. Do not use the suggested forced downgrade of Next's ESLint configuration as a substitute for an upstream fix. Recheck during dependency updates.
 
 External repository/document links are supplied from the project sources. Kestri's public availability could not be verified through the network during this run. Confirm its intended public visibility before sharing the portfolio with recruiters.
+
+## Brand icons
+
+Brand marks come from [Simple Icons](https://github.com/simple-icons/simple-icons), packaged locally as SVG paths in `components/brand-icons.tsx`. GitHub links include the GitHub mark, and named technologies retain visible text alongside decorative logos. Skill logos use brand colors; compact project tags follow their section color. The icons render on the server without client-side icon loading or external CDN requests.

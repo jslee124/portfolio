@@ -1,3 +1,4 @@
+import { GitHubIcon, TechnologyIcon } from "@/components/brand-icons";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -49,11 +50,14 @@ export default async function ProjectPage({ params }: Props) {
           <p className="case-tagline">{project.tagline}</p>
           <ul className="technologies">
             {project.technologies.map((technology) => (
-              <li key={technology}>{technology}</li>
+              <li key={technology}>
+                <TechnologyIcon name={technology} />
+                <span>{technology}</span>
+              </li>
             ))}
           </ul>
           <a className="button" href={project.github}>
-            View source on GitHub <Arrow diagonal />
+            <GitHubIcon /> View source on GitHub <Arrow diagonal />
           </a>
         </div>
         <div className="case-header-artifact">

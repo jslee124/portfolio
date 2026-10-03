@@ -1,3 +1,4 @@
+import { GitHubIcon } from "@/components/brand-icons";
 import Link from "next/link";
 import { site } from "@/data/site";
 import { Arrow } from "./icons";
@@ -34,7 +35,7 @@ export function TerminalHero() {
               Explore my work <Arrow />
             </Link>
             <a className="text-link" href={site.github}>
-              GitHub <Arrow diagonal />
+              <GitHubIcon /> GitHub <Arrow diagonal />
             </a>
           </div>
         </div>

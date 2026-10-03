@@ -1,3 +1,4 @@
+import { GitHubIcon, TechnologyIcon } from "@/components/brand-icons";
 import Link from "next/link";
 import type { Project } from "@/data/projects";
 import { SystemArtwork } from "./system-artwork";
@@ -37,7 +38,10 @@ export function ProjectCard({ project }: { project: Project }) {
               aria-label={`${project.name} technologies`}
             >
               {project.technologies.map((technology) => (
-                <li key={technology}>{technology}</li>
+                <li key={technology}>
+                  <TechnologyIcon name={technology} />
+                  <span>{technology}</span>
+                </li>
               ))}
             </ul>
           </div>
@@ -54,7 +58,7 @@ export function ProjectCard({ project }: { project: Project }) {
                 href={project.github}
                 aria-label={`${project.name} on GitHub`}
               >
-                View source
+                <GitHubIcon /> View source
                 <Arrow diagonal />
               </a>
             </div>
