@@ -15,6 +15,7 @@ export function Navbar() {
         <div className="nav-links">
           <Link href="/#projects">Projects</Link>
           <Link href="/#about">About</Link>
+          <Link href="/#skills">Skills</Link>
           <a href={site.github}>
             GitHub <Arrow diagonal />
           </a>

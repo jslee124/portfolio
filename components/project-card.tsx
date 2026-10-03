@@ -14,17 +14,24 @@ export function ProjectCard({ project }: { project: Project }) {
           <div className="project-identity">
             <p className="project-role">
               {project.slug === "forge"
-                ? "01 / Agent runtime"
-                : "02 / Personal application"}
+                ? "Project 01 / Built by me"
+                : "Project 02 / Built by me"}
             </p>
-            <h3>
-              <Link href={`/projects/${project.slug}`}>
-                {project.name}
-                <span className="project-title-dot" aria-hidden="true">
-                  .
-                </span>
-              </Link>
-            </h3>
+            <div className="project-name">
+              <h3>
+                <Link href={`/projects/${project.slug}`}>
+                  {project.name}
+                  <span className="project-title-dot" aria-hidden="true">
+                    .
+                  </span>
+                </Link>
+              </h3>
+              <p className="project-kind">
+                {project.slug === "forge"
+                  ? "Coding agent & developer tools"
+                  : "Personal AI assistant"}
+              </p>
+            </div>
             <ul
               className="technologies"
               aria-label={`${project.name} technologies`}

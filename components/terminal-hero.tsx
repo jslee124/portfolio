@@ -9,29 +9,25 @@ export function TerminalHero() {
     <section className="signal-hero" aria-labelledby="hero-title">
       <div className="hero-readout container">
         <span>
-          <i aria-hidden="true" /> Mori’s working directory
+          <i aria-hidden="true" /> Mori / Developer portfolio
         </span>
         <span>Backend / Agents / Tools</span>
       </div>
-      <h1 id="hero-title" className="sr-only">
-        Mori — Software engineer building backend systems, AI agents, and
-        developer tools
-      </h1>
       <CharacterField />
       <div className="hero-brief container">
         <div>
-          <p className="hero-position">
-            I build the systems
-            <br />
-            behind the software.
-          </p>
+          <h1 id="hero-title" className="hero-position">
+            Hi, I’m Mori.
+            <br />I build backend systems.
+          </h1>
           <p className="hero-description">
-            Computer Science student. Working with TypeScript, Go, and Python.
+            Computer Science student focused on AI agents and developer tools.
+            Working with TypeScript, Go, and Python.
           </p>
         </div>
         <div className="hero-invitation">
           <span className="hero-caption">
-            Inspect the runtime. Explore the application.
+            Explore my projects and the engineering behind them.
           </span>
           <div className="hero-actions">
             <Link className="button" href="#projects">
@@ -47,7 +43,7 @@ export function TerminalHero() {
         <TerminalCommand />
       </div>
       <div className="hero-bottom container">
-        <span>Two independent projects. One engineering mindset.</span>
+        <span>My projects · About me · Technical skills</span>
         <Link href="#projects">
           Scroll to inspect <span aria-hidden="true">↓</span>
         </Link>

@@ -3,7 +3,15 @@
 import { useState } from "react";
 import { useNavigationSignal } from "./navigation-signal";
 
-const shortcuts = ["help", "projects", "forge", "kestri", "about", "contact"];
+const shortcuts = [
+  "help",
+  "projects",
+  "forge",
+  "kestri",
+  "about",
+  "skills",
+  "contact",
+];
 
 export function TerminalCommand() {
   const navigate = useNavigationSignal();
@@ -24,7 +32,7 @@ export function TerminalCommand() {
     }
     if (input === "help") {
       setResponse(
-        "Commands: projects, forge, kestri, about, contact, whoami, clear. Try open forge.",
+        "Commands: projects, forge, kestri, about, skills, contact, whoami, clear. Try open forge.",
       );
       return;
     }
@@ -38,7 +46,7 @@ export function TerminalCommand() {
       navigate(`/projects/${input}`);
       return;
     }
-    if (["projects", "about", "contact"].includes(input)) {
+    if (["projects", "about", "skills", "contact"].includes(input)) {
       navigate(`#${input}`);
       setResponse(`Opened ${input}.`);
       return;
