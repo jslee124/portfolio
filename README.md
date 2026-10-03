@@ -1,6 +1,6 @@
 # Mori — Developer portfolio
 
-A minimal, responsive portfolio built with Next.js App Router, React, TypeScript, and Tailwind CSS. The homepage puts Forge and Kestri first, with dedicated engineering case studies at `/projects/forge` and `/projects/kestri`.
+A terminal-inspired, responsive portfolio built with Next.js App Router, React, TypeScript, and Tailwind CSS. The homepage puts Forge and Kestri first, with dedicated engineering case studies at `/projects/forge` and `/projects/kestri`.
 
 ## Development
 
@@ -33,9 +33,9 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to your actua
 
 ## Architecture
 
-All page and presentation components are Server Components. Project routes are statically generated from typed project data; unknown projects return 404. No database, API backend, authentication, CMS, analytics, or animation dependencies are needed. Geist fonts are packaged locally, so builds and visitors do not depend on Google Fonts.
+Pages and case study content are Server Components. Four client components add progressive interaction: `character-field.tsx` draws the hero, `project-scene.tsx` tracks scroll stages, `terminal-command.tsx` handles local command feedback, and `navigation-signal.tsx` coordinates a brief transition shared by links and commands. Project routes are statically generated from typed project data; unknown projects return 404. No database, API backend, authentication, CMS, analytics, or animation dependencies are needed. IBM Plex Mono fonts are packaged locally.
 
-The site uses semantic sections, keyboard-visible focus, a skip link, responsive layouts, and reduced-motion preferences. Architecture diagrams are readable HTML lists rather than screenshots.
+The homepage uses a full-width MORI character field, a geometric Forge execution scene, and a muted green Kestri memory constellation. The character field gathers on entry, responds to pointer movement, and stops rendering when settled or offscreen. Scene stages follow ordinary scrolling through short sticky sections; mobile layouts display the entire diagram directly. Reduced-motion preferences remove the gathering, pointer displacement, sticky sequences, and navigation transition. Case study prose follows the system light/dark preference. The site retains semantic sections, keyboard focus, a skip link, readable HTML diagrams, and ordinary navigation links without JavaScript. `components/system-artwork.tsx` contains the homepage’s native SVG scenes; the case studies retain readable HTML diagrams. The diagrams are explanatory sketches, not real run transcripts or performance claims.
 
 ## Content sources
 
@@ -48,7 +48,9 @@ The diagrams simplify responsibilities rather than claiming independent services
 
 ## Verification record
 
-The first implementation passed `npm run lint`, `npm run typecheck`, and `npm run build`. The production server was checked in Chromium at 375, 768, and 1440 pixels with both light and dark preferences, across all three pages (18 combinations). Checks covered HTTP responses, horizontal overflow, section anchors, and axe-core WCAG A/AA rules. Keyboard skip navigation, project-to-project navigation, the unknown-project 404, and the generated social PNG also passed. Desktop and mobile screenshots were reviewed. Automated accessibility checks supplement visual and keyboard review; they do not constitute a full accessibility audit.
+The dynamic redesign passed `npm run lint`, `npm run typecheck`, and `npm run build`. The production preview was checked in the in-app browser for the character field, scroll stage progression, command navigation, normal project links, and responsive layouts, including the refined project scenes and mobile responsibility lists. Reduced-motion behavior is implemented in Canvas, scene tracking, CSS, and navigation; a fresh full accessibility audit and OS-level reduced-motion acceptance have not been performed for this redesign.
+
+Commands: `help`, `whoami`, `projects`, `forge`, `kestri`, `about`, `contact`, and `clear`; `open forge` and `open kestri` also work. Commands provide portfolio navigation only, with no shell execution, filesystem access, or backend.
 
 `npm audit --omit=dev` reported zero vulnerabilities. The full audit reported five high-severity findings in the ESLint development dependency chain, rooted in the `braces` nested-pattern denial-of-service advisory ([GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)). At implementation time, the registry's latest `braces` release was still affected. Do not use the suggested forced downgrade of Next's ESLint configuration as a substitute for an upstream fix. Recheck during dependency updates.
 

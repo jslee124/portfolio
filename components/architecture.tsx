@@ -13,10 +13,7 @@ export function Architecture({
       className={`architecture ${project.slug} ${compact ? "architecture-compact" : ""}`}
       aria-label={`${project.name} architecture`}
     >
-      <div className="diagram-label">
-        <span className="status-dot" /> SYSTEM OVERVIEW{" "}
-        <span aria-hidden="true">↗</span>
-      </div>
+      <div className="diagram-label">System responsibilities</div>
       <div className="diagram-entry">{architecture.entry}</div>
       <div className="connector" aria-hidden="true">
         <span>↓</span>

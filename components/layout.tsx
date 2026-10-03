@@ -7,7 +7,10 @@ export function Navbar() {
     <header className="site-header">
       <nav className="container nav" aria-label="Main navigation">
         <Link className="brand" href="/" aria-label="Mori home">
-          <Mark small /> Mori
+          <Mark />
+          <span>
+            mori<span className="brand-path">:~</span>
+          </span>
         </Link>
         <div className="nav-links">
           <Link href="/#projects">Projects</Link>
@@ -25,30 +28,15 @@ export function Footer() {
   return (
     <footer className="container footer">
       <Link className="brand" href="/">
-        <Mark small /> Mori
+        <Mark />
+        <span>
+          mori<span className="brand-path">:~</span>
+        </span>
       </Link>
-      <p>Built with care. Made to be understood.</p>
+      <p>Built to inspect. Made to explore.</p>
       <a href={site.github}>
-        GitHub <Arrow diagonal />
+        Source & projects <Arrow diagonal />
       </a>
     </footer>
-  );
-}
-
-export function SectionHeading({
-  number,
-  children,
-  id,
-}: {
-  number: string;
-  id?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <h2 id={id} className="section-heading">
-      <span>{number}</span>
-      <span aria-hidden="true">/</span>
-      {children}
-    </h2>
   );
 }

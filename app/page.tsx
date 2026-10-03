@@ -1,98 +1,87 @@
-import Link from "next/link";
 import { projects } from "@/data/projects";
 import { site, technologies } from "@/data/site";
 import { Arrow } from "@/components/icons";
-import { SectionHeading } from "@/components/layout";
 import { ProjectCard } from "@/components/project-card";
+import { TerminalHero } from "@/components/terminal-hero";
 
 export default function Home() {
   return (
-    <main id="main-content" tabIndex={-1} className="container">
-      <section className="hero" aria-labelledby="hero-title">
-        <div className="hero-eyebrow">
-          <span className="status-dot" /> MORI — SOFTWARE ENGINEER
-        </div>
-        <h1 id="hero-title">
-          Building the systems
-          <br />
-          behind <span>the interface.</span>
-        </h1>
-        <p className="hero-subtitle">
-          Backend engineering. AI agents. Developer tools.
-        </p>
-        <p className="hero-description">
-          I build backend systems and AI-powered tools with TypeScript, Go, and
-          Python. Focused on how things work, and what makes them reliable.
-        </p>
-        <div className="hero-actions">
-          <Link className="button" href="#projects">
-            View my work <Arrow />
-          </Link>
-          <a className="text-link" href={site.github}>
-            GitHub <Arrow diagonal />
-          </a>
-        </div>
-        <div className="hero-bottom">
-          <span>Computer Science student</span>
-          <span className="hero-coordinate">
-            RUNTIME → APPLICATION → SYSTEM
-          </span>
-        </div>
-      </section>
+    <main id="main-content" tabIndex={-1}>
+      <TerminalHero />
 
       <section
         id="projects"
+        tabIndex={-1}
         className="work-section"
         aria-labelledby="work-title"
       >
-        <div className="section-top">
-          <SectionHeading number="01" id="work-title">
-            Selected work
-          </SectionHeading>
-          <span className="section-note">
-            Two projects. Two layers of agent engineering.
-          </span>
+        <div className="section-top container work-directory">
+          <h2 id="work-title">
+            <span className="section-prompt" aria-hidden="true">
+              $
+            </span>{" "}
+            Selected systems /
+          </h2>
+          <p>
+            <span>INDEX 01—02</span> · Independent projects
+          </p>
         </div>
         <div className="project-list">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.slug} project={project} index={index} />
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
       </section>
 
       <section
         id="about"
-        className="about-section"
+        tabIndex={-1}
+        className="about-section container"
         aria-labelledby="about-title"
       >
-        <SectionHeading number="02">About</SectionHeading>
-        <div className="about-content">
+        <div className="about-intro">
           <h2 id="about-title">
-            Interested in what happens
-            <br />
-            <span>below the surface.</span>
+            <span className="section-prompt" aria-hidden="true">
+              $
+            </span>{" "}
+            cat about.md
           </h2>
-          <div className="about-prose">
-            <p>
-              I’m a Computer Science student focused on backend engineering, AI
-              agents, and developer tools.
-            </p>
-            <p>
-              I enjoy understanding the systems behind a product: runtime
-              architecture, APIs, persistence, tooling, infrastructure, and the
-              tradeoffs involved in building reliable software.
-            </p>
-            <p>
-              My projects explore both sides of agent engineering—from an
-              inspectable runtime to an application that remembers and follows
-              through.
-            </p>
-          </div>
+          <p>
+            Follow the request.
+            <br />
+            Understand the state.
+            <br />
+            Build for the failure.
+          </p>
+        </div>
+        <div className="about-prose">
+          <p>
+            I’m focused on backend engineering, AI agents, and developer tools.
+            I like following a system below the interface: how a request moves,
+            where state lives, and what happens when something fails.
+          </p>
+          <p>
+            Forge is where I explore agent runtime engineering. Kestri is where
+            I explore what it takes to turn an agent into a useful personal
+            application.
+          </p>
+          <p>
+            Different projects, different responsibilities. Both give me a
+            reason to understand the tradeoffs.
+          </p>
         </div>
       </section>
 
-      <section className="stack-section" aria-label="Tech stack">
-        <SectionHeading number="03">Tech stack</SectionHeading>
+      <section
+        className="stack-section container"
+        aria-labelledby="stack-title"
+      >
+        <h2 id="stack-title">
+          <span className="section-prompt" aria-hidden="true">
+            $
+          </span>{" "}
+          cat toolkit.txt
+        </h2>
         <div className="stack-grid">
           {technologies.map(({ category, items }) => (
             <div className="stack-category" key={category}>
@@ -109,20 +98,29 @@ export default function Home() {
 
       <section
         id="contact"
+        tabIndex={-1}
         className="contact-section"
         aria-labelledby="contact-title"
       >
-        <SectionHeading number="04">Contact</SectionHeading>
-        <div className="contact-content">
+        <div className="container contact-content">
           <div>
-            <h2 id="contact-title">Let’s build something.</h2>
+            <h2 id="contact-title">
+              Have a good
+              <br />
+              problem
+              <span className="contact-cursor" aria-hidden="true">
+                ?
+              </span>
+            </h2>
             <p>
-              Have a project, an opportunity, or a good engineering question?
+              A project, an opportunity, or an engineering question.
+              <br />
+              I’d be glad to hear about it.
             </p>
           </div>
           <div className="contact-links">
-            <a className="text-link" href={site.github}>
-              Find me on GitHub <Arrow diagonal />
+            <a className="contact-primary" href={site.github}>
+              Let’s talk <Arrow diagonal />
             </a>
             {site.email && (
               <a className="text-link" href={`mailto:${site.email}`}>

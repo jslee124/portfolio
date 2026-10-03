@@ -4,7 +4,8 @@ import { notFound } from "next/navigation";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 import { Architecture } from "@/components/architecture";
-import { Arrow } from "@/components/icons";
+import { Arrow, ProjectSymbol } from "@/components/icons";
+import { ForgeFlow, KestriTimeline } from "@/components/project-visuals";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -41,27 +42,28 @@ export default async function ProjectPage({ params }: Props) {
         <span aria-hidden="true">←</span> Selected work
       </Link>
       <header className="case-header">
-        <div className="eyebrow">
-          ENGINEERING CASE STUDY <span>/</span> {project.category}
+        <div>
+          <ProjectSymbol project={project.slug} />
+          <div className="eyebrow">{project.category}</div>
+          <h1>{project.name}</h1>
+          <p className="case-tagline">{project.tagline}</p>
+          <ul className="technologies">
+            {project.technologies.map((technology) => (
+              <li key={technology}>{technology}</li>
+            ))}
+          </ul>
+          <a className="button" href={project.github}>
+            View source on GitHub <Arrow diagonal />
+          </a>
         </div>
-        <h1>
-          {project.name}
-          <span>.</span>
-        </h1>
-        <p className="case-tagline">{project.tagline}</p>
-        <ul className="technologies">
-          {project.technologies.map((technology) => (
-            <li key={technology}>{technology}</li>
-          ))}
-        </ul>
-        <a className="button" href={project.github}>
-          View source on GitHub <Arrow diagonal />
-        </a>
+        <div className="case-header-artifact">
+          {project.slug === "forge" ? <ForgeFlow /> : <KestriTimeline />}
+        </div>
       </header>
       <div className="case-layout">
         <aside className="case-sidebar">
           <nav aria-label="Case study sections">
-            <p className="eyebrow">ON THIS PAGE</p>
+            <p className="eyebrow">In this case study</p>
             <a href="#overview">Overview</a>
             <a href="#why">Why I built it</a>
             <a href="#architecture">Architecture</a>
@@ -131,7 +133,7 @@ export default async function ProjectPage({ params }: Props) {
       </div>
       <Link href={`/projects/${nextProject.slug}`} className="next-project">
         <div>
-          <span className="eyebrow">NEXT PROJECT</span>
+          <span className="eyebrow">Next project</span>
           <h2>{nextProject.name}</h2>
           <p>{nextProject.category}</p>
         </div>
