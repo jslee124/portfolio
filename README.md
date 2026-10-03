@@ -33,7 +33,7 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to your actua
 
 ## Deployment
 
-Production: https://mori-portfolio-weld.vercel.app — Vercel project `morisoft1/mori-portfolio`.
+Production: https://morisama.vercel.app — Vercel project `morisoft1/mori-portfolio`.
 
 `NEXT_PUBLIC_SITE_URL` is configured for the Production environment with this origin. The local `.vercel` project link and `.env.local` are ignored by Git. After signing in to the Vercel CLI, publish the current working tree with:
 
@@ -65,6 +65,8 @@ The diagrams simplify responsibilities rather than claiming independent services
 The dynamic redesign passed `npm run lint`, `npm run typecheck`, and `npm run build`. The production preview was checked in the in-app browser for the character field, command navigation, normal project links, and responsive layouts. The readability revision replaces SVG scenes with HTML nodes and fixed-size text, checked at the annotated 801px width and desktop/mobile widths. Reduced-motion behavior is implemented in Canvas, CSS, and navigation; a fresh full accessibility audit and OS-level reduced-motion acceptance have not been performed for this redesign.
 
 Commands: `help`, `whoami`, `projects`, `forge`, `kestri`, `about`, `skills`, `contact`, and `clear`; `open forge` and `open kestri` also work. Commands provide portfolio navigation only, with no shell execution, filesystem access, or backend.
+
+The hero includes a retro computer console with a warm gray enclosure, green CRT-style screen, static scanlines, and tactile command keys. It keeps the last three command exchanges; `clear` clears those exchanges. Screen effects do not flash or animate, and the layout reflows for phones.
 
 `npm audit --omit=dev` reported zero vulnerabilities. The full audit reported five high-severity findings in the ESLint development dependency chain, rooted in the `braces` nested-pattern denial-of-service advisory ([GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm)). At implementation time, the registry's latest `braces` release was still affected. Do not use the suggested forced downgrade of Next's ESLint configuration as a substitute for an upstream fix. Recheck during dependency updates.
 

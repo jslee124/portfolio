@@ -7,7 +7,7 @@ export function Navbar() {
   return (
     <header className="site-header">
       <nav className="container nav" aria-label="Main navigation">
-        <Link className="brand" href="/" aria-label="Mori home">
+        <Link className="brand" href="/#top" aria-label="Mori home">
           <Mark />
           <span>
             mori<span className="brand-path">:~</span>

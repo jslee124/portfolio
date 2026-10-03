@@ -71,7 +71,7 @@ export function NavigationSignal({ children }: { children: ReactNode }) {
 
   return (
     <SignalContext.Provider value={navigate}>
-      <div onClickCapture={capture}>{children}</div>
+      <div id="top" onClickCapture={capture}>{children}</div>
       {destination && (
         <div key={destination} className="signal-transition" aria-hidden="true">
           <span>
