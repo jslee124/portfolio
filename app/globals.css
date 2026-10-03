@@ -960,21 +960,12 @@ html[lang="zh-CN"] :is(.project-description, .case-content p, .about-prose p) {
   cursor: grabbing;
   user-select: none;
 }
-.terminal-drag-hint {
-  display: none;
-  color: #5f6054;
-  font-size: 9px;
-  letter-spacing: 1px;
-}
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .terminal-command {
     cursor: grab;
   }
   .terminal-screen {
     cursor: auto;
-  }
-  .terminal-drag-hint {
-    display: inline;
   }
   .terminal-power {
     margin-left: auto;
@@ -983,11 +974,6 @@ html[lang="zh-CN"] :is(.project-description, .case-content p, .about-prose p) {
 @media (prefers-reduced-motion: reduce) {
   .terminal-command {
     transform: none;
-  }
-}
-@media (max-width: 600px) {
-  .terminal-drag-hint {
-    display: none;
   }
 }
 .terminal-bezel-title,

@@ -100,3 +100,7 @@ Run `npm run check:i18n` to check translation coverage and language-switch URL b
 两种语言分别设置 document language 和 metadata，切换时加载新文档。全局 404 同时提供中英文入口。社交分享图片共用，页面标题、描述、Open Graph locale、语言替代链接和 sitemap 则按语言生成。
 
 使用 `npm run check:i18n` 检查翻译覆盖和切换 URL。生产服务器启动后，可运行 `I18N_TEST_URL=http://localhost:3000 npm run check:i18n`，检查六个页面、metadata、导航语言和 404 状态。
+
+The terminal enclosure, screen, input hints, and command responses intentionally stay in English in both locales. Project commands still open the case study in the current site language. The tilt gesture remains available without an on-screen drag hint.
+
+Terminal 的机身标签、屏幕、输入提示和命令反馈在两种语言中均保持英文。项目命令仍打开当前站点语言的项目详情。拖动倾斜交互保留，但不再显示拖动提示。

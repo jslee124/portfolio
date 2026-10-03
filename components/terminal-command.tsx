@@ -1,6 +1,6 @@
 "use client";
 
-import { translator, localizedPath, type Locale } from "@/lib/i18n";
+import { localizedPath, type Locale } from "@/lib/locale-paths";
 
 import { useEffect, useRef, useState, type PointerEvent } from "react";
 import { useNavigationSignal } from "./navigation-signal";
@@ -16,7 +16,6 @@ const shortcuts = [
 ];
 
 export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
-  const t = translator(locale);
   const navigate = useNavigationSignal();
   const pendingNavigation = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -110,46 +109,36 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
     }
     if (input === "help") {
       record(
-        t(
-          "Commands: projects, forge, kestri, about, skills, contact, whoami, clear. Try open forge.",
-        ),
+        "Commands: projects, forge, kestri, about, skills, contact, whoami, clear. Try open forge.",
       );
       return;
     }
     if (input === "whoami") {
       record(
-        t(
-          "Mori. Computer Science student building backend systems, AI agents, and developer tools.",
-        ),
+        "Mori. Computer Science student building backend systems, AI agents, and developer tools.",
       );
       return;
     }
     if (input === "forge" || input === "kestri") {
-      record(
-        locale === "zh"
-          ? `正在打开 ${input} 项目介绍…`
-          : `Opening ${input} case study…`,
-      );
+      record(`Opening ${input} case study…`);
       openAfterOutput(localizedPath(locale, `/projects/${input}`));
       return;
     }
     if (["projects", "about", "skills", "contact"].includes(input)) {
-      record(locale === "zh" ? `正在打开 ${input}…` : `Opening ${input}…`);
+      record(`Opening ${input}…`);
       openAfterOutput(`#${input}`);
       return;
     }
     record(
-      locale === "zh"
-        ? `未知命令：${input.slice(0, 80)}。输入 help 查看可用命令。`
-        : `Unknown command: ${input.slice(0, 80)}. Type help to see available commands.`,
+      `Unknown command: ${input.slice(0, 80)}. Type help to see available commands.`,
     );
   }
 
   return (
-    <div className="terminal-workstation">
+    <div className="terminal-workstation" lang="en">
       <section
         className="terminal-command"
-        aria-label={t("Interactive portfolio terminal")}
+        aria-label="Interactive portfolio terminal"
         onPointerDown={startDrag}
         onPointerMove={moveDrag}
         onPointerUp={endDrag}
@@ -175,32 +164,28 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
         />
         <div className="terminal-bezel-title">
           <span className="terminal-model">
-            MORI <span>{t("PERSONAL COMPUTER")}</span>
+            MORI <span>PERSONAL COMPUTER</span>
           </span>
           <span className="terminal-power">
-            <i aria-hidden="true" /> {t("POWER")}{" "}
-          </span>
-          <span className="terminal-drag-hint">
-            {t("DRAG THE CASE TO TILT ↔")}
+            <i aria-hidden="true" /> POWER{" "}
           </span>
         </div>
         <div className="terminal-screen">
           <div className="terminal-screen-heading">
             <span>PORTFOLIO OS</span>
-            <span>{t("INTERACTIVE DIRECTORY")}</span>
+            <span>INTERACTIVE DIRECTORY</span>
           </div>
           <div className="terminal-boot">
-            <p>{t("Welcome to Mori’s working directory.")}</p>
-            <p>{t("Explore the projects. Meet the person behind them.")}</p>
+            <p>Welcome to Mori’s working directory.</p>
+            <p>Explore the projects. Meet the person behind them.</p>
             <p className="terminal-instruction">
-              {t("Type")} <strong>help</strong>{" "}
-              {t("to begin, or use the keys below.")}{" "}
+              Type <strong>help</strong> to begin, or use the keys below.{" "}
             </p>
           </div>
           <div
             className="command-history"
             role="log"
-            aria-label={t("Command history")}
+            aria-label="Command history"
             aria-live="polite"
             aria-relevant="additions"
           >
@@ -225,16 +210,13 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
               <span className="prompt-user">mori</span>
               <span className="prompt-path">:~</span>
               <span>$</span>
-              <span className="sr-only">
-                {" "}
-                {t("Portfolio navigation command")}
-              </span>
+              <span className="sr-only"> Portfolio navigation command</span>
             </label>
             <input
               id="portfolio-command"
               value={command}
               onChange={(event) => setCommand(event.target.value)}
-              placeholder={t("type a command…")}
+              placeholder="type a command…"
               maxLength={100}
               autoComplete="off"
               autoCapitalize="none"
@@ -244,14 +226,14 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
             <button
               type="submit"
               className="command-enter"
-              aria-label={t("Run portfolio command")}
+              aria-label="Run portfolio command"
             >
               ↵
             </button>
           </form>
         </div>
         <div className="terminal-keyboard">
-          <span id="command-hint">{t("QUICK COMMANDS")}</span>
+          <span id="command-hint">QUICK COMMANDS</span>
           <div className="command-shortcuts">
             {shortcuts.map((shortcut) => (
               <button
@@ -264,7 +246,7 @@ export function TerminalCommand({ locale = "en" }: { locale?: Locale }) {
             ))}
           </div>
           <div className="terminal-bezel-footer" aria-hidden="true">
-            <span>{t("LOCAL DIRECTORY / PORTFOLIO NAVIGATION")}</span>
+            <span>LOCAL DIRECTORY / PORTFOLIO NAVIGATION</span>
             <span className="terminal-vents" />
           </div>
         </div>

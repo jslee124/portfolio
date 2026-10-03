@@ -51,6 +51,7 @@ for (const project of exports.projects) {
   project.sources.forEach(({ label }) => translated(label));
 }
 
+// The terminal deliberately stays in English; surrounding page copy is localized.
 const files = [
   "home-page",
   "project-page",
@@ -58,7 +59,6 @@ const files = [
   "not-found-page",
   "layout",
   "terminal-hero",
-  "terminal-command",
   "system-artwork",
   "project-visuals",
   "project-card",
@@ -150,6 +150,23 @@ if (process.env.I18N_TEST_URL) {
       const response = await fetch(`${base}${path}`);
       assert.equal(response.status, 200, path);
       const html = await response.text();
+      if (!suffix) {
+        const terminal = html.match(
+          /<div class="terminal-workstation" lang="en">[\s\S]*?<\/section><\/div>/,
+        )?.[0];
+        assert.ok(
+          terminal?.includes("Welcome to Mori"),
+          `English terminal: ${path}`,
+        );
+        assert.ok(
+          !/[\u3400-\u9fff]/.test(terminal),
+          `Terminal stays English: ${path}`,
+        );
+        assert.ok(
+          !terminal.includes("terminal-drag-hint"),
+          `Tilt hint removed: ${path}`,
+        );
+      }
       assert.ok(
         html.includes(`lang="${prefix ? "zh-CN" : "en"}"`),
         `Document language: ${path}`,
